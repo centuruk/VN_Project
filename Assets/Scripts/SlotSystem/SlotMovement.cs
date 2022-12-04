@@ -13,9 +13,24 @@ public class SlotMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     //화면 밖을 넘어가거나 조건이 맞지 않으면 원래 자리로 돌아감.
     //드래그가 끝이나거나 실행되면 레이아웃 리프레시. (빈자리 메꾸기.) //자연스런 이동이 필요할지도.
 
+    [SerializeField] Transform canvas;
+    [SerializeField] GraphicRaycaster raycaster;   
+    [SerializeField] Transform previousParent;
+    [SerializeField] RectTransform rect;
+
+    private void Awake()
+    {
+        canvas = FindObjectOfType<Canvas>().transform;
+        raycaster = FindObjectOfType<GraphicRaycaster>();
+        rect = GetComponent<RectTransform>();
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("드래그 시작");
+        previousParent = transform.parent;
+        transform.SetParent(canvas);
+        transform.SetAsLastSibling(); //가장 마지막에 렌더링
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -23,7 +38,13 @@ public class SlotMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         Vector2 eventPos = Camera.main.ScreenToWorldPoint(eventData.position);
         transform.position = eventPos;
 
-
+        //충돌 여부 확인하기
+        List<RaycastResult> result = new List<RaycastResult>();
+        raycaster.Raycast(eventData, result);
+        foreach(RaycastResult r in result)
+        {
+            Debug.Log(r.gameObject.name);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
