@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardData
+[System.Serializable]
+public struct CardData
 {
-    public int level;
     public string name;
+    public int level;
+    //public Sprite icon; //일단은 이미지는 나중에.
 }
 
