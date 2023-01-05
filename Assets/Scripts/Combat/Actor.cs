@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum ActorType
     {
-        
+        CHARACTER, MONSTER
+    }
+    public ActorType type = ActorType.CHARACTER;
+
+    private Actors Actors = new Actors();
+
+    private void OnEnable()
+    {
+        Actors.RegistedActors(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        Actors = FindObjectOfType<Actors>();          
+    }
+
+
+    public Actor GetTarget(TargetSelectType type)
+    {
+        //Actors에서 타겟을 읽어오기
+        return this;
     }
 }
