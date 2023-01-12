@@ -14,6 +14,6 @@ public enum FSMState
     MOVE,
     ATTACK,
     SKILL,
-    HIT,
+    HIT, //넉백 , 스턴 등 관련된 효과에서 사용
     DEATH
 }
