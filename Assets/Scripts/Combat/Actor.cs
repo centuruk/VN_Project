@@ -25,7 +25,12 @@ public class Actor : MonoBehaviour
 
     public Actor GetTarget(TargetSelectType type)
     {
-        //Actors에서 타겟을 읽어오기
+        //Actors???? ?????? ????????
         return this;
+    }
+
+    private void OnDisable()
+    {
+        Actors.RemovedActors(this);   
     }
 }

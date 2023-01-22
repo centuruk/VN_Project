@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//юс╫ц
+//????
 
 public class CharacterStats : MonoBehaviour
 {
@@ -22,6 +22,14 @@ public class CharacterStats : MonoBehaviour
 
     void Start()
     {
+        //??
+        hp = 100;
+        attack = 10;
+        def = 10;
+        dex = 10;
+        attackSpeed = 1;
+        moveSpeed = 5;
+
         maxhp = hp;       
     }
 }
