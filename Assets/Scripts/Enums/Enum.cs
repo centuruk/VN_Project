@@ -17,3 +17,9 @@ public enum FSMState
     HIT, //넉백 , 스턴 등 관련된 효과에서 사용
     DEATH
 }
+
+public enum AttackType
+{
+    MELEE,      //근접 공격 (칼, 둔기, 창...)
+    RANGE       //원거리 공격(활, 총, 마법.,...)
+}
