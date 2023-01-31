@@ -65,41 +65,48 @@ public class Actors : MonoBehaviour
     //동일한 객체가 나올수 있음.
     private Actor GetHpTarget(Actor a, Actor[] actors, bool high)
     {
-        float f = (high)? 0 : Mathf.Infinity;
-
         Actor result = null;
-        
-        //동일한 객체가 나왔을떄 담을 녀석
-        List<Actor> indexs = new List<Actor>(); 
+        List<Actor> targets = new List<Actor>();
+        float compare = (high) ? 0 : Mathf.Infinity;
 
         //비교하기
         for (int i = 0; i < actors.Length; i++)
         {
             float getHp = actors[i].GetComponent<CharacterStats>().hp;
-            if (high && getHp >= f)
+            
+            if (high)
             {
-                f = getHp;
-                result = actors[i];
-
-                if (getHp == f) indexs.Add(actors[i]);
-                else indexs.Clear();
+                if (getHp > compare)
+                {
+                    compare = getHp;
+                    result = actors[i];
+                    targets.Clear();
+                }
+                else if (getHp == compare)
+                {
+                    compare = getHp;
+                    targets.Add(actors[i]);
+                }
             }
-            else if(getHp <= f)
+            else
             {
-                f = getHp;
-                result = actors[i];
-
-                if (getHp == f) indexs.Add(actors[i]);
-                else indexs.Clear();
+                if (getHp < compare)
+                {
+                    compare = getHp;
+                    result = actors[i];
+                    targets.Clear();
+                }
+                else if (getHp == compare)
+                {
+                    compare = getHp;
+                    targets.Add(actors[i]);
+                }
             }
+
         }
 
         //동일한 객체들이 있을때 가장 가까운 객체 찾기
-        if(indexs.Count > 0)
-        {
-            Actor[] compare = indexs.ToArray();
-            result = GetNearTarget(a, compare);
-        }
+        if(targets.Count > 0) result = GetNearTarget(a, targets.ToArray());
 
         return result;
     }
@@ -107,34 +114,44 @@ public class Actors : MonoBehaviour
     //3. 오버롤 가장 높은 혹은 가장 낮은 (쎄거나 약하거나)
     private Actor GetOverRollTarget(Actor a, Actor[] actors, bool high)
     {
-        float f = (high) ? 0 : Mathf.Infinity;
-
         Actor result = null;
         List<Actor> targets = new List<Actor>();
-        
+        float compare = (high) ? 0 : Mathf.Infinity;
+
         for (int i = 0; i < actors.Length; i++)
         {
             float over = actors[i].GetComponent<CharacterStats>().GetOverRoll();
-            if (high && over >= f)
-            {
-                f = over;
-                result = actors[i];
 
-                if (f == over) targets.Add(actors[i]);
-                else targets.Clear();
+            if (high)
+            {
+                if(over > compare)
+                {
+                    compare = over;
+                    result = actors[i];
+                    targets.Clear();
+                }
+                else if(over == compare)
+                {
+                    compare = over;
+                    targets.Add(actors[i]);
+                }
             }
-            else if(over <= f)
+            else
             {
-                f = over;
-                result = actors[i];
-
-                if (f == over) targets.Add(actors[i]);
-                else targets.Clear();
+                if (over < compare)
+                {
+                    compare = over;
+                    result = actors[i];
+                    targets.Clear();
+                }
+                else if (over == compare)
+                {
+                    compare = over;
+                    targets.Add(actors[i]);
+                }
             }
         }
-
         if(targets.Count > 0) result = GetNearTarget(a, targets.ToArray());
-
         return result;
     }
 

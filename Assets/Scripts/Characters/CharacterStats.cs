@@ -21,6 +21,13 @@ public class CharacterStats : MonoBehaviour
 
     void Start()
     {
+        //юс╫ц Random Point
+        hp = Random.Range(80, 120);
+        attack = def = dex = Random.Range(5, 10);
+        attackSpeed = 1;
+        moveSpeed = 2;
+        attackRange = (attackType == AttackType.MELEE) ? 1 : 4;
+
         maxhp = hp;       
     }
 
