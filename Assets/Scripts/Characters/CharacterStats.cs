@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//????
-
 public class CharacterStats : MonoBehaviour
 {
     public float hp;
@@ -16,20 +14,26 @@ public class CharacterStats : MonoBehaviour
     public float attackSpeed;
     public float moveSpeed;
 
+    public AttackType attackType = AttackType.MELEE;
     public float attackRange;
-
+    
     public TargetSelectType targetSelect = TargetSelectType.MELEE;
 
     void Start()
     {
-        //??
-        hp = 100;
-        attack = 10;
-        def = 10;
-        dex = 10;
+        //юс╫ц Random Point
+        hp = Random.Range(80, 120);
+        attack = def = dex = Random.Range(5, 10);
         attackSpeed = 1;
-        moveSpeed = 5;
+        moveSpeed = 2;
+        attackRange = (attackType == AttackType.MELEE) ? 1 : 4;
 
         maxhp = hp;       
+    }
+
+    public float GetOverRoll()
+    {
+        float overRoll = (attack + def + dex) / 3;
+        return overRoll;
     }
 }

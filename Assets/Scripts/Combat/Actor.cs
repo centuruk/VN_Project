@@ -9,7 +9,6 @@ public class Actor : MonoBehaviour
         CHARACTER, MONSTER
     }
     public ActorType type = ActorType.CHARACTER;
-
     private Actors Actors = new Actors();
 
     private void OnEnable()
@@ -22,15 +21,9 @@ public class Actor : MonoBehaviour
         Actors = FindObjectOfType<Actors>();          
     }
 
-
     public Actor GetTarget(TargetSelectType type)
     {
-        //Actors???? ?????? ????????
-        return this;
-    }
-
-    private void OnDisable()
-    {
-        Actors.RemovedActors(this);   
+        //Actors에서 타겟을 읽어오기
+        return Actors.GetTarget(this, type);
     }
 }
